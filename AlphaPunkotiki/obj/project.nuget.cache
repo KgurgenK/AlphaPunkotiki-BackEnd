@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RkIWDZCE38krh/LMsqiyLw0LxGWsCR3H2yn8gJ0cheN217tVwcTdr7R4Zr5TpZiRi+43LGkOI450GUISJf243g==",
+  "dgSpecHash": "YnFgrVutr3Q0plMQ27di1wQH0uWfo7GF6d3/WKDI/l06SovfXLU2vGeDeUoESjAa3SFU9rCQwWoI9NoX/v3ZDg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\gurge\\OneDrive\\Рабочий стол\\Study\\AlphaPunkotiki\\AlphaPunkotiki.csproj",
+  "projectFilePath": "C:\\Users\\gurge\\source\\repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gurge\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\gurge\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

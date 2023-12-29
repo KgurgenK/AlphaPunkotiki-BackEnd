@@ -433,11 +433,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gurge\\OneDrive\\Рабочий стол\\Study\\AlphaPunkotiki\\AlphaPunkotiki.csproj",
-      "projectName": "AlphaPunkotiki",
-      "projectPath": "C:\\Users\\gurge\\OneDrive\\Рабочий стол\\Study\\AlphaPunkotiki\\AlphaPunkotiki.csproj",
+      "projectUniqueName": "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.WebApi.csproj",
+      "projectName": "AlphaPunkotiki.WebApi",
+      "projectPath": "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.WebApi.csproj",
       "packagesPath": "C:\\Users\\gurge\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gurge\\OneDrive\\Рабочий стол\\Study\\AlphaPunkotiki\\obj\\",
+      "outputPath": "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\gurge\\AppData\\Roaming\\NuGet\\NuGet.Config",

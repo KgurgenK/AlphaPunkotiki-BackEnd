@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gurge\\OneDrive\\Рабочий стол\\Study\\AlphaPunkotiki\\AlphaPunkotiki.csproj": {}
+    "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gurge\\OneDrive\\Рабочий стол\\Study\\AlphaPunkotiki\\AlphaPunkotiki.csproj": {
+    "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gurge\\OneDrive\\Рабочий стол\\Study\\AlphaPunkotiki\\AlphaPunkotiki.csproj",
+        "projectUniqueName": "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.csproj",
         "projectName": "AlphaPunkotiki",
-        "projectPath": "C:\\Users\\gurge\\OneDrive\\Рабочий стол\\Study\\AlphaPunkotiki\\AlphaPunkotiki.csproj",
+        "projectPath": "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.csproj",
         "packagesPath": "C:\\Users\\gurge\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gurge\\OneDrive\\Рабочий стол\\Study\\AlphaPunkotiki\\obj\\",
+        "outputPath": "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gurge\\AppData\\Roaming\\NuGet\\NuGet.Config",
