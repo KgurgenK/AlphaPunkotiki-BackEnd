@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using AlphaPunkotiki.Domain.Interfaces;
 using AlphaPunkotiki.Domain.Entities;
-using AlphaPunkotiki.Infrastructure.Interfaces;
+using AlphaPunkotiki.Domain.Entities.Interfaces;
+using AlphaPunkotiki.Infrastructure.Database.Interfaces;
+using AlphaPunkotiki.Domain.Enums;
 
 namespace AlphaPunkotiki.Infrastructure.Database;
 
@@ -29,4 +30,10 @@ public sealed class PostgresDbContext : DbContext, IAppDbContext
 
     public async Task<int> SaveChangesAsync()
         => await base.SaveChangesAsync().ConfigureAwait(false);
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasPostgresEnum<InterviewRequestStatus>();
+        modelBuilder.HasPostgresEnum<QuestionType>();
+    }
 }
