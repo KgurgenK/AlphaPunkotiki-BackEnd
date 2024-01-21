@@ -6,7 +6,5 @@ public interface IQaRepository<T>
     : IRepository<T>
     where T : IAggregationRoot
 {
-    Task AddRangeAsync(ICollection<T> entities);
-
-    Task<IReadOnlyList<T>> GetManyBySurveyIdAsync(Guid surveyId);
+    Task AddRangeAsync(IEnumerable<T> entities);
 }

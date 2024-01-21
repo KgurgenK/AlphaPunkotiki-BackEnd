@@ -1,6 +1,8 @@
-﻿using AlphaPunkotiki.Domain.Entities.Interfaces;
+﻿using System.Linq.Expressions;
+using AlphaPunkotiki.Domain.Entities.Interfaces;
 using AlphaPunkotiki.Infrastructure.Database.Interfaces;
 using AlphaPunkotiki.Infrastructure.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlphaPunkotiki.Infrastructure.Repositories.Base;
 
@@ -33,4 +35,7 @@ public abstract class RepositoryBase<T>(IAppDbContext context)
 
         await DbContext.SaveChangesAsync();
     }
+
+    public async Task<IReadOnlyList<T>> GetManyAsync(Expression<Func<T, bool>>? filter = default)
+        => await DbContext.Set<T>().Where(filter ?? (_ => true)).ToListAsync();
 }
