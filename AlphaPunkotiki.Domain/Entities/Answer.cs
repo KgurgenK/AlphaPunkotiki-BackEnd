@@ -1,12 +1,21 @@
-﻿using AlphaPunkotiki.Domain.Base;
+﻿using AlphaPunkotiki.Domain.Entities.Base;
 
 namespace AlphaPunkotiki.Domain.Entities;
 
-public class Answer(Guid userId, Guid questionId, string[] values) : Entity
+public class Answer : Entity
 {
-    public Guid UserId { get; private set; } = userId;
+    public Guid UserId { get; }
 
-    public Guid QuestionId { get; private set; } = questionId;
+    public Guid QuestionId { get; }
 
-    public string[]? Values { get; private set; } = values;
+    public string[]? Values { get; }
+
+    protected Answer() { }
+
+    protected Answer(Guid userId, Guid questionId, string[] values)
+    {
+        UserId = userId;
+        QuestionId = questionId;
+        Values = values;
+    }
 }

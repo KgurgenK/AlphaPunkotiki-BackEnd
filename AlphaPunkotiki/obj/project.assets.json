@@ -433,11 +433,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\gurge\\source\\repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.WebApi.csproj",
       "projectName": "AlphaPunkotiki.WebApi",
-      "projectPath": "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.WebApi.csproj",
+      "projectPath": "C:\\Users\\gurge\\source\\repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\AlphaPunkotiki.WebApi.csproj",
       "packagesPath": "C:\\Users\\gurge\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gurge\\Source\\Repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\obj\\",
+      "outputPath": "C:\\Users\\gurge\\source\\repos\\AlphaPunkotiki-BackEnd\\AlphaPunkotiki\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\gurge\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -490,7 +490,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
