@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AlphaPunkotiki.Domain.Base;
+﻿using AlphaPunkotiki.Domain.Entities.Base;
 
 namespace AlphaPunkotiki.Domain.Entities;
 
-public class Interview(
-    Guid creatorId,
-    string name,
-    string description,
-    int price,
-    bool isLimitedPublicationTime,
-    DateTime? publicationTimeLimit,
-    bool isLimitedUsages,
-    int? usagesLimit,
-    bool isLimitedCompletionTime,
-    DateTime? completionTimeLimit)
-    : Offer(
+public class Interview : Offer
+{
+    protected Interview() { }
+
+    public Interview(
+        Guid creatorId,
+        string name,
+        string description,
+        int price,
+        bool isLimitedPublicationTime,
+        DateTime? publicationTimeLimit,
+        bool isLimitedUsages,
+        int? usagesLimit,
+        bool isLimitedCompletionTime,
+        DateTime? completionTimeLimit)
+        : base(
         creatorId,
         name,
         description,
@@ -26,4 +27,5 @@ public class Interview(
         isLimitedUsages,
         usagesLimit,
         isLimitedCompletionTime,
-        completionTimeLimit);
+        completionTimeLimit) { }
+}

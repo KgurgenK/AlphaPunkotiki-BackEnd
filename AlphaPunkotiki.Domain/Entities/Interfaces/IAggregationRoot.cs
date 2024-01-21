@@ -1,4 +1,4 @@
-﻿namespace AlphaPunkotiki.Domain.Interfaces;
+﻿namespace AlphaPunkotiki.Domain.Entities.Interfaces;
 
 public interface IAggregationRoot
 {

@@ -1,26 +1,31 @@
-﻿using AlphaPunkotiki.Domain.Base;
+﻿using AlphaPunkotiki.Domain.Entities.Base;
 
 namespace AlphaPunkotiki.Domain.Entities;
 
-public class Survey(
-    Guid creatorId,
-    string name,
-    string description,
-    int price,
-    bool isLimitedPublicationTime,
-    DateTime? publicationTimeLimit,
-    bool isLimitedUsages,
-    int? usagesLimit,
-    bool isLimitedCompletionTime,
-    DateTime? completionTimeLimit)
-    : Offer(
-        creatorId,
-        name,
-        description,
-        price,
-        isLimitedPublicationTime,
-        publicationTimeLimit,
-        isLimitedUsages,
-        usagesLimit,
-        isLimitedCompletionTime,
-        completionTimeLimit);
+public class Survey : Offer
+{
+    protected Survey() { }
+
+    public Survey(
+        Guid creatorId,
+        string name,
+        string description,
+        int price,
+        bool isLimitedPublicationTime,
+        DateTime? publicationTimeLimit,
+        bool isLimitedUsages,
+        int? usagesLimit,
+        bool isLimitedCompletionTime,
+        DateTime? completionTimeLimit)
+        : base(
+            creatorId,
+            name,
+            description,
+            price,
+            isLimitedPublicationTime,
+            publicationTimeLimit,
+            isLimitedUsages,
+            usagesLimit,
+            isLimitedCompletionTime,
+            completionTimeLimit) { }
+}
