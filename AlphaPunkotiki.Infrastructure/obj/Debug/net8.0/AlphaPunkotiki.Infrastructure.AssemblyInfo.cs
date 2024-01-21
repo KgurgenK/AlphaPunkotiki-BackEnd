@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlphaPunkotiki.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac7641718a2e21f61cbb5b353f0cb192bde632cb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+68500465b569f21f384a410b495ddefc87b723a2")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlphaPunkotiki.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlphaPunkotiki.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
