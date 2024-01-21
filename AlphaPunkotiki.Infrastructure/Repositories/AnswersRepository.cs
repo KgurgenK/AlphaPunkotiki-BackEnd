@@ -7,24 +7,15 @@ using Microsoft.EntityFrameworkCore;
 namespace AlphaPunkotiki.Infrastructure.Repositories;
 
 public class AnswersRepository(IAppDbContext context) 
-    : RepositoryBase<Answer>(context), IAnswersRepository
+    : QaRepository<Answer>(context), IAnswersRepository
 {
-    public async Task AddRangeAsync(ICollection<Answer> entities)
-    {
-        await DbContext.Set<Answer>().AddRangeAsync(entities);
-
-        await DbContext.SaveChangesAsync();
-    }
-
-    public async Task<IReadOnlyList<Answer>> GetManyBySurveyIdAsync(Guid surveyId)
+    public Task<IReadOnlyList<Answer>> GetManyBySurveyIdAsync(Guid surveyId)
     {
         var questions = DbContext.Set<Question>();
 
-        return await DbContext.Set<Answer>().Where(x => questions.Find(x.QuestionId)!.SurveyId == surveyId)
-            .ToListAsync();
+        return GetManyAsync(x => questions.Find(x.QuestionId)!.SurveyId == surveyId);
     }
 
-    public async Task<IReadOnlyList<Answer>> GetManyByQuestionIdAsync(Guid questionId) 
-        => await DbContext.Set<Answer>().Where(x => x.QuestionId == questionId).ToListAsync();
+    public Task<IReadOnlyList<Answer>> GetManyByQuestionIdAsync(Guid questionId) 
+        => GetManyAsync(x => x.QuestionId == questionId);
 }
-

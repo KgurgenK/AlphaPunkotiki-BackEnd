@@ -9,17 +9,16 @@ namespace AlphaPunkotiki.Infrastructure.Repositories;
 public class InterviewRequestsRepository(IAppDbContext context)
     : RepositoryBase<InterviewRequest>(context), IInterviewRequestsRepository
 {
-    public async Task<IReadOnlyList<InterviewRequest>> GetManyByCandidateIdAsync(Guid candidateId) 
-        => await DbContext.Set<InterviewRequest>().Where(x => x.CandidateId == candidateId).ToListAsync();
+    public Task<IReadOnlyList<InterviewRequest>> GetManyByCandidateIdAsync(Guid candidateId) 
+        => GetManyAsync(x => x.CandidateId == candidateId);
 
-    public async Task<IReadOnlyList<InterviewRequest>> GetManyByInterviewIdAsync(Guid interviewId) 
-        => await DbContext.Set<InterviewRequest>().Where(x => x.InterviewId == interviewId).ToListAsync();
+    public Task<IReadOnlyList<InterviewRequest>> GetManyByInterviewIdAsync(Guid interviewId) 
+        => GetManyAsync(x => x.InterviewId == interviewId);
 
-    public async Task<IReadOnlyList<InterviewRequest>> GetManyByInterviewerIdAsync(Guid interviewerId)
+    public Task<IReadOnlyList<InterviewRequest>> GetManyByInterviewerIdAsync(Guid interviewerId)
     {
         var interviews = DbContext.Set<Interview>();
 
-        return await DbContext.Set<InterviewRequest>()
-            .Where(x => interviews.Find(x.InterviewId)!.CreatorId == interviewerId).ToListAsync();
+        return GetManyAsync(x => interviews.Find(x.InterviewId)!.CreatorId == interviewerId);
     }
 }
