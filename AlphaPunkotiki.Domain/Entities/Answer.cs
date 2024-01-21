@@ -12,7 +12,7 @@ public class Answer : Entity
 
     protected Answer() { }
 
-    protected Answer(Guid userId, Guid questionId, string[] values)
+    public Answer(Guid userId, Guid questionId, string[]? values)
     {
         UserId = userId;
         QuestionId = questionId;

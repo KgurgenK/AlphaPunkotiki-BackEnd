@@ -24,7 +24,8 @@ public abstract class Offer : Entity
 
     public DateTime? CompletionTimeLimit { get; }
 
-    public bool IsAvailable { get; private set; }
+    public bool IsAvailable => (!IsLimitedPublicationTime || DateTime.Now < PublicationTimeLimit) &&
+                               (!IsLimitedUsages || Usages < UsagesLimit);
 
 #pragma warning disable CS8618
     protected Offer() { }
@@ -53,15 +54,16 @@ public abstract class Offer : Entity
         Usages = 0;
         IsLimitedCompletionTime = isLimitedCompletionTime;
         CompletionTimeLimit = completionTimeLimit;
-        IsAvailable = true;
     }
 
-    public void Use()
+    public bool Use()
     {
+        if (!IsAvailable)
+            return false;
+
         Usages++;
 
-        if (Usages == UsagesLimit)
-            IsAvailable = false;
+        return true;
     }
 
     public void ChangeProps(string name, string description, int price)

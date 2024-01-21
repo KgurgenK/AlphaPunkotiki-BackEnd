@@ -13,7 +13,7 @@ public class Question : Entity
 
     public string? Tooltip { get; }
 
-    public string[] Variables { get; }
+    public string[]? Variables { get; }
 
     public bool IsRequired { get; }
 
@@ -21,7 +21,7 @@ public class Question : Entity
     protected Question() { }
 #pragma warning restore CS8618
 
-    public Question(Guid surveyId, QuestionType type, string name, string? tooltip, string[] variables,
+    public Question(Guid surveyId, QuestionType type, string name, string? tooltip, string[]? variables,
         bool isRequired)
     {
         SurveyId = surveyId;
