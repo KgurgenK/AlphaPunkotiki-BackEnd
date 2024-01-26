@@ -1,4 +1,5 @@
-﻿using AlphaPunkotiki.Domain.Dto;
+﻿using Kontur.Results;
+using AlphaPunkotiki.Domain.Dto;
 using AlphaPunkotiki.Domain.Entities;
 using AlphaPunkotiki.Infrastructure.Repositories.Interfaces;
 using AlphaPunkotiki.Infrastructure.Services.Interfaces;
@@ -36,28 +37,60 @@ public class SurveysService(ISurveysRepository surveysRepository, IQuestionsRepo
 
         await surveysRepository.AddAsync(survey);
         await questionsRepository.AddRangeAsync(questionsInfo.Select(x =>
-            new Question(survey.Id, x.Type, x.Name, x.Tooltip, x.Variables, x.IsRequired)));
+            new Question(survey, x.Type, x.Name, x.Tooltip, x.Variables, x.IsRequired)));
     }
 
-    public Task AddAnswersAsync(Guid userId, IReadOnlyList<AnswerDto> answersInfo)
-        => answersRepository.AddRangeAsync(answersInfo.Select(x => new Answer(userId, x.QuestionId, x.Values)));
+    public async Task<bool> TryAddAnswersAsync(Guid userId, IReadOnlyList<AnswerDto> answersInfo)
+    {
+        if (answersInfo.Count == 0)
+            return false;
 
-    public Task<IReadOnlyList<Survey>> GetAllAvailableSurveysAsync()
-        => surveysRepository.GetManyAsync(x => x.IsAvailable);
+        var answers = new List<Answer>();
+        var firstQuestion = await questionsRepository.FindAsync(answersInfo[0].QuestionId);
 
-    public Task<IReadOnlyList<Survey>> GetUserSurveysAsync(Guid userId) 
+        if (firstQuestion == null || !firstQuestion.Survey.Use())
+            return false;
+
+        foreach (var answerInfo in answersInfo)
+        {
+            var question = await questionsRepository.FindAsync(answerInfo.QuestionId);
+
+            if (question == null || question.Survey != firstQuestion.Survey)
+                return false;
+
+            answers.Add(new Answer(userId, question, answerInfo.Values));
+        }
+
+        await answersRepository.AddRangeAsync(answers);
+
+        return true;
+    }
+
+    public async Task<IReadOnlyList<Survey>> GetAllAvailableSurveysAsync()
+    {
+        var surveys = await surveysRepository.GetManyAsync();
+        
+        return await Task.Run(() => surveys.Where(x => x.IsAvailable).ToList());
+
+    }
+
+    public Task<IReadOnlyList<Survey>> GetUserSurveysAsync(Guid userId)
         => surveysRepository.GetManyByCreatorIdAsync(userId);
 
-    public async Task<IReadOnlyDictionary<string, (int, float)>> GetStatisticsOfQuestionAsync(Guid questionId)
+    public async Task<IReadOnlyDictionary<string, AnswerItemStatisticsDto>> GetStatisticsOfQuestionAsync(Guid questionId)
     {
         var answers = await answersRepository.GetManyByQuestionIdAsync(questionId);
-        var answersValues = answers.SelectMany(x => x.Values ?? []);
-        var valuesCount = answersValues.Count();
-        var result = new Dictionary<string, int>();
 
-        foreach (var answersValue in answersValues)
-            result[answersValue] = result.TryGetValue(answersValue, out var value) ? value + 1 : 1;
+        return await Task.Run(() =>
+        {
+            var answersValues = answers.SelectMany(x => x.Values ?? []).ToList();
+            var result = new Dictionary<string, int>();
 
-        return result.ToDictionary(x => x.Key, x => (x.Value, (float)x.Value / valuesCount));
+            foreach (var answersValue in answersValues)
+                result[answersValue] = result.TryGetValue(answersValue, out var value) ? value + 1 : 1;
+
+            return result.ToDictionary(x => x.Key,
+                x => new AnswerItemStatisticsDto(x.Value, (float)x.Value / answersValues.Count));
+        });
     }
 }

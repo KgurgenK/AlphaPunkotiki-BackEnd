@@ -1,3 +1,5 @@
-﻿namespace AlphaPunkotiki.WebApi.Models.SurveysController;
+﻿using AlphaPunkotiki.Domain.Dto;
 
-public record GetQuestionStatisticsResponse(IReadOnlyDictionary<string, (int frequency, float part)> Statistics);
+namespace AlphaPunkotiki.WebApi.Models.SurveysController;
+
+public record GetQuestionStatisticsResponse(IReadOnlyDictionary<string, AnswerItemStatisticsDto> Statistics);

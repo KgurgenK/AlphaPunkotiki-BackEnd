@@ -11,4 +11,3 @@ public abstract class OffersRepository<T>(IAppDbContext context)
     public Task<IReadOnlyList<T>> GetManyByCreatorIdAsync(Guid creatorId)
         => GetManyAsync(x => x.CreatorId == creatorId);
 }
-

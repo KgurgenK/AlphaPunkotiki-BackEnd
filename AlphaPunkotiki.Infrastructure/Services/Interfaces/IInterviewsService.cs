@@ -8,7 +8,7 @@ public interface IInterviewsService
 {
     Task CreateInterviewAsync(InterviewDto interviewInfo);
 
-    Task<bool> CreateInterviewRequestAsync(Guid userId, Guid interviewId);
+    Task<bool> TryCreateInterviewRequestAsync(Guid userId, Guid interviewId);
 
     Task<Interview?> GetInterviewAsync(Guid interviewId);
 
@@ -22,7 +22,7 @@ public interface IInterviewsService
 
     Task<IReadOnlyList<InterviewRequest>> GetInterviewRequestsByInterviewAsync(Guid interviewId);
 
-    Task<bool> ChangeInterviewRequestStatusAsync(Guid interviewRequestId, InterviewRequestStatus newStatus, string message);
+    Task<bool> TryChangeInterviewRequestStatusAsync(Guid interviewRequestId, InterviewRequestStatus newStatus, string message);
 
     Task DeleteInterviewRequestAsync(Guid interviewRequestId);
 }

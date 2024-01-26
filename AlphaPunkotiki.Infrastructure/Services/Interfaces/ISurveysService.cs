@@ -7,7 +7,7 @@ public interface ISurveysService
 {
     Task CreateSurveyAsync(SurveyDto surveyInfo, IReadOnlyList<QuestionDto> questionsInfo);
 
-    Task AddAnswersAsync(Guid userId, IReadOnlyList<AnswerDto> answersInfo);
+    Task<bool> TryAddAnswersAsync(Guid userId, IReadOnlyList<AnswerDto> answersInfo);
 
     Task<(Survey?, IReadOnlyList<Question>)> GetSurveyWithQuestionsAsync(Guid surveyId);
 
@@ -15,5 +15,5 @@ public interface ISurveysService
 
     Task<IReadOnlyList<Survey>> GetUserSurveysAsync(Guid userId);
 
-    Task<IReadOnlyDictionary<string, (int, float)>> GetStatisticsOfQuestionAsync(Guid questionId);
+    Task<IReadOnlyDictionary<string, AnswerItemStatisticsDto>> GetStatisticsOfQuestionAsync(Guid questionId);
 }

@@ -37,5 +37,9 @@ public abstract class RepositoryBase<T>(IAppDbContext context)
     }
 
     public async Task<IReadOnlyList<T>> GetManyAsync(Expression<Func<T, bool>>? filter = default)
-        => await DbContext.Set<T>().Where(filter ?? (_ => true)).ToListAsync();
+    {
+        var entities = DbContext.Set<T>();
+
+        return await entities.Where(filter ?? (_ => true)).ToListAsync();
+    }
 }
