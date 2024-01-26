@@ -13,12 +13,8 @@ public class InterviewRequestsRepository(IAppDbContext context)
         => GetManyAsync(x => x.CandidateId == candidateId);
 
     public Task<IReadOnlyList<InterviewRequest>> GetManyByInterviewIdAsync(Guid interviewId) 
-        => GetManyAsync(x => x.InterviewId == interviewId);
+        => GetManyAsync(x => x.Interview.Id == interviewId);
 
-    public Task<IReadOnlyList<InterviewRequest>> GetManyByInterviewerIdAsync(Guid interviewerId)
-    {
-        var interviews = DbContext.Set<Interview>();
-
-        return GetManyAsync(x => interviews.Find(x.InterviewId)!.CreatorId == interviewerId);
-    }
+    public Task<IReadOnlyList<InterviewRequest>> GetManyByInterviewerIdAsync(Guid interviewerId) 
+        => GetManyAsync(x => x.Interview.CreatorId == interviewerId);
 }

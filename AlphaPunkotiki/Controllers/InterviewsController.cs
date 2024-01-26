@@ -9,7 +9,7 @@ namespace AlphaPunkotiki.WebApi.Controllers;
 [ApiController]
 public class InterviewsController(IInterviewsService interviewsService) : ControllerBase
 {
-    [HttpGet("interviews/{id:guid}")]
+    [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetInterviewResponse>> GetInterviewById([FromRoute] Guid id)
@@ -19,36 +19,36 @@ public class InterviewsController(IInterviewsService interviewsService) : Contro
         return interview is null ? NotFound() : Ok(new GetInterviewResponse(interview));
     }
 
-    [HttpGet("interviews")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<GetInterviewsResponse>> GetAvailableInterviews()
         => Ok(new GetInterviewsResponse(await interviewsService.GetAllAvailableInterviewsAsync()));
 
-    [HttpGet("user-interviews/{creatorId:guid}")]
+    [HttpGet("created-by/{creatorId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<GetInterviewsResponse>> GetUserInterviews([FromRoute] Guid creatorId)
         => Ok(new GetInterviewsResponse(await interviewsService.GetUserInterviewsAsync(creatorId)));
 
-    [HttpGet("candidate-interview-requests/{candidateId:guid}")]
+    [HttpGet("requests/created-by/{candidateId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<GetInterviewRequestsResponse>> GetCandidateInterviewRequests(
         [FromRoute] Guid candidateId)
         => Ok(new GetInterviewRequestsResponse(
             await interviewsService.GetCandidateInterviewRequestsAsync(candidateId)));
 
-    [HttpGet("interviewer-interview-requests/{interviewerId:guid}")]
+    [HttpGet("requests/by-interviewer/{interviewerId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<GetInterviewRequestsResponse>> GetInterviewerInterviewRequests(
         [FromRoute] Guid interviewerId)
         => Ok(new GetInterviewRequestsResponse(await interviewsService.GetInterviewerInterviewRequestsAsync(interviewerId)));
 
-    [HttpGet("interview-interview-requests/{interviewId:guid}")]
+    [HttpGet("{interviewId:guid}/requests")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<GetInterviewRequestsResponse>> GetInterviewRequestsOfInterview(
         [FromRoute] Guid interviewId)
         => Ok(new GetInterviewRequestsResponse(await interviewsService.GetInterviewRequestsByInterviewAsync(interviewId)));
 
-    [HttpPost("create-interview")]
+    [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult> CreateInterview([FromBody] CreateInterviewRequest request)
     {
@@ -57,41 +57,41 @@ public class InterviewsController(IInterviewsService interviewsService) : Contro
         return Created();
     }
 
-    [HttpPost("create-interview-request")]
+    [HttpPost("requests/create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> CreateInterviewRequest([FromBody] CreateInterviewRequestRequest request)
     {
-        var success = await interviewsService.CreateInterviewRequestAsync(request.UserId, request.InterviewId);
+        var success = await interviewsService.TryCreateInterviewRequestAsync(request.UserId, request.InterviewId);
 
-        return success ? Created() : Forbid();
+        return success ? Created() : BadRequest();
     }
 
-    [HttpPost("approve-interview-request/{interviewRequestId:guid}")]
+    [HttpPost("requests/{interviewRequestId:guid}/approve")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> ApproveInterviewRequest(
         [FromRoute] Guid interviewRequestId, [FromBody] ChangeInterviewRequestStatusRequest request)
     {
-        var success = await interviewsService.ChangeInterviewRequestStatusAsync(interviewRequestId,
+        var success = await interviewsService.TryChangeInterviewRequestStatusAsync(interviewRequestId,
             InterviewRequestStatus.Approved, request.Message);
 
         return success ? Ok() : NotFound();
     }
 
-    [HttpPost("reject-interview-request/{interviewRequestId:guid}")]
+    [HttpPost("requests/{interviewRequestId:guid}/reject")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> RejectInterviewRequest(
         [FromRoute] Guid interviewRequestId, [FromBody] ChangeInterviewRequestStatusRequest request)
     {
-        var success = await interviewsService.ChangeInterviewRequestStatusAsync(interviewRequestId,
+        var success = await interviewsService.TryChangeInterviewRequestStatusAsync(interviewRequestId,
             InterviewRequestStatus.Rejected, request.Message);
 
         return success ? Ok() : NotFound();
     }
 
-    [HttpDelete("delete-interview-request/{interviewRequestId:guid}")]
+    [HttpDelete("requests/{interviewRequestId:guid}/delete")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> DeleteInterviewRequest([FromRoute] Guid interviewRequestId)
     {

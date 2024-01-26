@@ -10,5 +10,5 @@ public class QuestionsRepository(IAppDbContext context)
     : QaRepository<Question>(context), IQuestionsRepository
 {
     public Task<IReadOnlyList<Question>> GetManyBySurveyIdAsync(Guid surveyId) 
-        => GetManyAsync(x => x.SurveyId == surveyId);
+        => GetManyAsync(x => x.Survey.Id == surveyId);
 }

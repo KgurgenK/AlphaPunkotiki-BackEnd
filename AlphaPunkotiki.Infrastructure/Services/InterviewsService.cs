@@ -22,14 +22,14 @@ public class InterviewsService(IInterviewsRepository interviewsRepository,
             interviewInfo.IsLimitedCompletionTime,
             interviewInfo.CompletionTimeLimit));
 
-    public async Task<bool> CreateInterviewRequestAsync(Guid userId, Guid interviewId)
+    public async Task<bool> TryCreateInterviewRequestAsync(Guid userId, Guid interviewId)
     {
         var interview = await interviewsRepository.FindAsync(interviewId);
 
         if (interview == null || !interview.IsAvailable)
             return false;
 
-        await interviewRequestRepository.AddAsync(new InterviewRequest(interviewId, userId));
+        await interviewRequestRepository.AddAsync(new InterviewRequest(interview, userId));
 
         return true;
     }
@@ -60,30 +60,23 @@ public class InterviewsService(IInterviewsRepository interviewsRepository,
     public Task<IReadOnlyList<Interview>> GetUserInterviewsAsync(Guid userId) 
         => interviewsRepository.GetManyByCreatorIdAsync(userId);
 
-    public async Task<bool> ChangeInterviewRequestStatusAsync(Guid interviewRequestId, InterviewRequestStatus newStatus,
+    public async Task<bool> TryChangeInterviewRequestStatusAsync(Guid interviewRequestId, InterviewRequestStatus newStatus,
         string message)
     {
         var interviewRequest = await interviewRequestRepository.FindAsync(interviewRequestId);
 
-        if (interviewRequest == null ||
-            newStatus == InterviewRequestStatus.Approved && !await UseInterview(interviewRequest))
+        if (interviewRequest == null)
             return false;
+
+        if (newStatus == InterviewRequestStatus.Approved)
+        {
+            if (!interviewRequest.Interview.Use())
+                return false;
+            await interviewsRepository.UpdateAsync(interviewRequest.Interview);
+        }
 
         interviewRequest.ChangeStatus(InterviewRequestStatus.Approved, message);
         await interviewRequestRepository.UpdateAsync(interviewRequest);
-
-        return true;
-    }
-
-    private async Task<bool> UseInterview(InterviewRequest interviewRequest)
-    {
-        var interview = await interviewsRepository.FindAsync(interviewRequest.InterviewId);
-
-        if (interview == null)
-            return false;
-
-        interview.Use();
-        await interviewsRepository.UpdateAsync(interview);
 
         return true;
     }
