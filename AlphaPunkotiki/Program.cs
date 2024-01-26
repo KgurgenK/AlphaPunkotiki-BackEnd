@@ -8,6 +8,7 @@ builder.Services
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services
+    .AddSwagger()
     .AddPostgresDbContext(builder.Configuration)
     .AddInterviewsServices()
     .AddSurveysServices();
