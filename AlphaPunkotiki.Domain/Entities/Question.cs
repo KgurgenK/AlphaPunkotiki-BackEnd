@@ -5,26 +5,26 @@ namespace AlphaPunkotiki.Domain.Entities;
 
 public class Question : Entity
 {
-    public Guid SurveyId { get; }
+    public virtual Survey Survey { get; private set; }
 
-    public QuestionType Type { get; }
+    public QuestionType Type { get; private set; }
 
-    public string Name { get; }
+    public string Name { get; private set; }
 
-    public string? Tooltip { get; }
+    public string? Tooltip { get; private set; }
 
-    public string[]? Variables { get; }
+    public string[]? Variables { get; private set; }
 
-    public bool IsRequired { get; }
+    public bool IsRequired { get; private set; }
 
 #pragma warning disable CS8618
     protected Question() { }
 #pragma warning restore CS8618
 
-    public Question(Guid surveyId, QuestionType type, string name, string? tooltip, string[]? variables,
+    public Question(Survey survey, QuestionType type, string name, string? tooltip, string[]? variables,
         bool isRequired)
     {
-        SurveyId = surveyId;
+        Survey = survey;
         Type = type;
         Name = name;
         Tooltip = tooltip;

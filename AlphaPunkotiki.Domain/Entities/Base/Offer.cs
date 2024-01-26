@@ -2,7 +2,7 @@
 
 public abstract class Offer : Entity
 {
-    public Guid CreatorId { get; }
+    public Guid CreatorId { get; private set; }
 
     public string Name { get; private set; }
 
@@ -10,22 +10,22 @@ public abstract class Offer : Entity
 
     public int Price { get; private set; }
 
-    public bool IsLimitedPublicationTime { get; }
+    public bool IsLimitedPublicationTime { get; private set; }
 
-    public DateTime? PublicationTimeLimit { get; }
+    public DateTime? PublicationTimeLimit { get; private set; }
 
-    public bool IsLimitedUsages { get; }
+    public bool IsLimitedUsages { get; private set; }
 
-    public int? UsagesLimit { get; }
+    public int? UsagesLimit { get; private set; }
 
     public int Usages { get; private set; }
 
-    public bool IsLimitedCompletionTime { get; }
+    public bool IsLimitedCompletionTime { get; private set; }
 
-    public DateTime? CompletionTimeLimit { get; }
+    public DateTime? CompletionTimeLimit { get; private set; }
 
     public bool IsAvailable => (!IsLimitedPublicationTime || DateTime.Now < PublicationTimeLimit) &&
-                               (!IsLimitedUsages || Usages < UsagesLimit);
+                                 (!IsLimitedUsages || Usages < UsagesLimit);
 
 #pragma warning disable CS8618
     protected Offer() { }
