@@ -5,19 +5,21 @@ namespace AlphaPunkotiki.Domain.Entities;
 
 public class InterviewRequest : Entity
 {
-    public Guid InterviewId { get; }
+    public virtual Interview Interview { get; private set; }
 
-    public Guid CandidateId { get; }
+    public Guid CandidateId { get; private set; }
 
     public InterviewRequestStatus Status { get; private set; }
 
     public string? Message { get; private set; }
 
+#pragma warning disable CS8618
     protected InterviewRequest() { }
+#pragma warning restore CS8618
 
-    public InterviewRequest(Guid interviewId, Guid candidateId)
+    public InterviewRequest(Interview interview, Guid candidateId)
     {
-        InterviewId = interviewId;
+        Interview = interview;
         CandidateId = candidateId;
         Status = InterviewRequestStatus.InProcess;
         Message = default;
