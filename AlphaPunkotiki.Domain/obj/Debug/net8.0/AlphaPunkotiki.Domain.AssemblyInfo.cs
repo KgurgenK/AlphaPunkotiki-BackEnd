@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlphaPunkotiki.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+68500465b569f21f384a410b495ddefc87b723a2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e14e827f63b19f4cf1b81a5059b0fed11e2265b")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlphaPunkotiki.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlphaPunkotiki.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
