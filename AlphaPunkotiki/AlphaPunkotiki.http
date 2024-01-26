@@ -1,6 +1,0 @@
-@AlphaPunkotiki_HostAddress = http://localhost:5089
-
-GET {{AlphaPunkotiki_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

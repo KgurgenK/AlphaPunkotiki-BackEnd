@@ -11,6 +11,7 @@ public sealed class PostgresDbContext : DbContext, IAppDbContext
     public PostgresDbContext(DbContextOptions<PostgresDbContext> options)
         : base(options)
     {
+        //Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 
