@@ -1,5 +1,7 @@
 ﻿using AlphaPunkotiki.Domain.Dto;
 using AlphaPunkotiki.Domain.Entities;
+using AlphaPunkotiki.Domain.Errors;
+using Kontur.Results;
 
 namespace AlphaPunkotiki.Infrastructure.Services.Interfaces;
 
@@ -9,7 +11,7 @@ public interface ISurveysService
 
     Task<bool> TryAddAnswersAsync(Guid userId, IReadOnlyList<AnswerDto> answersInfo);
 
-    Task<(Survey?, IReadOnlyList<Question>)> GetSurveyWithQuestionsAsync(Guid surveyId);
+    Task<Result<NotFoundError, (Survey, IReadOnlyList<Question>)>> GetSurveyWithQuestionsAsync(Guid surveyId);
 
     Task<IReadOnlyList<Survey>> GetAllAvailableSurveysAsync();
 

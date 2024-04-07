@@ -1,6 +1,7 @@
 ﻿using AlphaPunkotiki.WebApi.Models.SurveysController;
 using AlphaPunkotiki.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using AlphaPunkotiki.Domain.Entities;
 
 namespace AlphaPunkotiki.WebApi.Controllers;
 
@@ -23,11 +24,11 @@ public class SurveysController(ISurveysService surveysService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetFullSurveyResponse>> GetSurveyWithQuestionsById([FromRoute] Guid id)
     {
-        var (survey, questions) = await surveysService.GetSurveyWithQuestionsAsync(id);
+        var result = await surveysService.GetSurveyWithQuestionsAsync(id);
 
-        return survey is null
-            ? NotFound()
-            : Ok(new GetFullSurveyResponse(survey, questions));
+        return result.TryGetValue(out var survey, out var fault)
+            ? Ok(new GetFullSurveyResponse(survey.Item1, survey.Item2))
+            : fault.ThrowResultError();
     }
 
     [HttpGet("questions-statistics/{id:guid}")]

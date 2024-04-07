@@ -62,33 +62,41 @@ public class InterviewsController(IInterviewsService interviewsService) : Contro
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> CreateInterviewRequest([FromBody] CreateInterviewRequestRequest request)
     {
-        var success = await interviewsService.TryCreateInterviewRequestAsync(request.UserId, request.InterviewId);
+        var result = await interviewsService.TryCreateInterviewRequestAsync(request.UserId, request.InterviewId);
 
-        return success ? Created() : BadRequest();
+        return result.TryGetFault(out var fault) 
+            ? fault.ThrowResultError() 
+            : Created();
     }
 
     [HttpPost("requests/{interviewRequestId:guid}/approve")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult> ApproveInterviewRequest(
         [FromRoute] Guid interviewRequestId, [FromBody] ChangeInterviewRequestStatusRequest request)
     {
-        var success = await interviewsService.TryChangeInterviewRequestStatusAsync(interviewRequestId,
+        var result = await interviewsService.TryChangeInterviewRequestStatusAsync(interviewRequestId,
             InterviewRequestStatus.Approved, request.Message);
 
-        return success ? Ok() : NotFound();
+        return result.TryGetFault(out var fault)
+            ? fault.ThrowResultError()
+            : Ok();
     }
 
     [HttpPost("requests/{interviewRequestId:guid}/reject")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult> RejectInterviewRequest(
         [FromRoute] Guid interviewRequestId, [FromBody] ChangeInterviewRequestStatusRequest request)
     {
-        var success = await interviewsService.TryChangeInterviewRequestStatusAsync(interviewRequestId,
+        var result = await interviewsService.TryChangeInterviewRequestStatusAsync(interviewRequestId,
             InterviewRequestStatus.Rejected, request.Message);
 
-        return success ? Ok() : NotFound();
+        return result.TryGetFault(out var fault)
+            ? fault.ThrowResultError()
+            : Ok();
     }
 
     [HttpDelete("requests/{interviewRequestId:guid}/delete")]
