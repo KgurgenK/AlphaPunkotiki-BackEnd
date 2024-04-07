@@ -1,6 +1,9 @@
 ﻿using AlphaPunkotiki.Domain.Dto;
 using AlphaPunkotiki.Domain.Entities;
 using AlphaPunkotiki.Domain.Enums;
+using AlphaPunkotiki.Domain.Errors;
+using AlphaPunkotiki.Domain.Errors.Base;
+using Kontur.Results;
 
 namespace AlphaPunkotiki.Infrastructure.Services.Interfaces;
 
@@ -8,7 +11,7 @@ public interface IInterviewsService
 {
     Task CreateInterviewAsync(InterviewDto interviewInfo);
 
-    Task<bool> TryCreateInterviewRequestAsync(Guid userId, Guid interviewId);
+    Task<Result<UnavailableElementError>> TryCreateInterviewRequestAsync(Guid userId, Guid interviewId);
 
     Task<Interview?> GetInterviewAsync(Guid interviewId);
 
@@ -22,7 +25,7 @@ public interface IInterviewsService
 
     Task<IReadOnlyList<InterviewRequest>> GetInterviewRequestsByInterviewAsync(Guid interviewId);
 
-    Task<bool> TryChangeInterviewRequestStatusAsync(Guid interviewRequestId, InterviewRequestStatus newStatus, string message);
+    Task<Result<Error>> TryChangeInterviewRequestStatusAsync(Guid interviewRequestId, InterviewRequestStatus newStatus, string message);
 
     Task DeleteInterviewRequestAsync(Guid interviewRequestId);
 }
