@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using AlphaPunkotiki.WebApi.Configuration;
+using AlphaPunkotiki.WebApi.Registrars;
 
 var builder = WebApplication.CreateBuilder(args);
 

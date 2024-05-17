@@ -4,7 +4,7 @@ using AlphaPunkotiki.Infrastructure.Database.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace AlphaPunkotiki.WebApi.Configuration;
+namespace AlphaPunkotiki.WebApi.Registrars;
 
 public static class PostgresDbContextRegistrar
 {

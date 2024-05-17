@@ -3,6 +3,7 @@ using AlphaPunkotiki.Domain.Entities;
 using AlphaPunkotiki.Domain.Entities.Interfaces;
 using AlphaPunkotiki.Infrastructure.Database.Interfaces;
 using AlphaPunkotiki.Domain.Enums;
+using AlphaPunkotiki.Infrastructure.Database.Configurations;
 
 namespace AlphaPunkotiki.Infrastructure.Database;
 
@@ -14,6 +15,16 @@ public sealed class PostgresDbContext : DbContext, IAppDbContext
         //Database.EnsureDeleted();
         Database.EnsureCreated();
     }
+
+    public DbSet<Account> Accounts { get; set; } = default!;
+
+    public DbSet<SuperUser> SuperUsers { get; set; } = default!;
+
+    public DbSet<Interviewer> Interviewers { get; set; } = default!;
+
+    public DbSet<Respondent> Respondents { get; set; } = default!;
+
+    public DbSet<Passport> Passports { get; set; } = default!;
 
     public DbSet<Survey> Surveys { get; set; } = default!;
 
@@ -36,5 +47,8 @@ public sealed class PostgresDbContext : DbContext, IAppDbContext
     {
         modelBuilder.HasPostgresEnum<InterviewRequestStatus>();
         modelBuilder.HasPostgresEnum<QuestionType>();
+        modelBuilder.HasPostgresEnum<Gender>();
+        modelBuilder.HasPostgresEnum<Interest>();
+        modelBuilder.ApplyConfiguration(new AccountEntityConfiguration());
     }
 }
