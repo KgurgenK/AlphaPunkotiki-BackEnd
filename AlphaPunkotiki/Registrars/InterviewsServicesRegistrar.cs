@@ -3,7 +3,7 @@ using AlphaPunkotiki.Infrastructure.Repositories.Interfaces;
 using AlphaPunkotiki.Infrastructure.Services;
 using AlphaPunkotiki.Infrastructure.Services.Interfaces;
 
-namespace AlphaPunkotiki.WebApi.Configuration;
+namespace AlphaPunkotiki.WebApi.Registrars;
 
 public static class InterviewsServicesRegistrar
 {

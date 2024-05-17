@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace AlphaPunkotiki.WebApi.Configuration;
+namespace AlphaPunkotiki.WebApi.Registrars;
 
 public static class SwaggerRegistrar
 {
