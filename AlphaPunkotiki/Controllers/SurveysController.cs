@@ -1,7 +1,7 @@
-﻿using AlphaPunkotiki.WebApi.Models.SurveysController;
+﻿using AlphaPunkotiki.Domain.Enums;
 using AlphaPunkotiki.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using AlphaPunkotiki.Domain.Entities;
+using AlphaPunkotiki.WebApi.Controllers.Models.SurveysController;
 
 namespace AlphaPunkotiki.WebApi.Controllers;
 
@@ -26,11 +26,12 @@ public class SurveysController(ISurveysService surveysService) : ControllerBase
     {
         var result = await surveysService.GetSurveyWithQuestionsAsync(id);
 
-        return result.TryGetValue(out var survey, out var fault)
-            ? Ok(new GetFullSurveyResponse(survey.Item1, survey.Item2))
+        return result.TryGetValue(out var surveyWithQuestions, out var fault)
+            ? Ok(new GetFullSurveyResponse(surveyWithQuestions.Survey, surveyWithQuestions.Questions))
             : fault.ThrowResultError();
     }
 
+    [AuthorizedRoles(Role.Interviewer, Role.Admin)]
     [HttpGet("questions-statistics/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<GetQuestionStatisticsResponse>> GetQuestionStatistics([FromRoute] Guid id)
@@ -40,6 +41,7 @@ public class SurveysController(ISurveysService surveysService) : ControllerBase
         return Ok(new GetQuestionStatisticsResponse(statistics));
     }
 
+    [AuthorizedRoles(Role.Interviewer, Role.Admin)]
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult> CreateSurvey([FromBody] CreateSurveyRequest request)
@@ -49,6 +51,7 @@ public class SurveysController(ISurveysService surveysService) : ControllerBase
         return Created();
     }
 
+    [AuthorizedRoles(Role.Respondent, Role.Admin)]
     [HttpPost("post-answers")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
