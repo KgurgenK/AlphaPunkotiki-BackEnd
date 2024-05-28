@@ -11,7 +11,8 @@ builder.Services
     .AddSwagger()
     .AddPostgresDbContext(builder.Configuration)
     .AddInterviewsServices()
-    .AddSurveysServices();
+    .AddSurveysServices()
+    .AddAccountsServices();
 
 var app = builder.Build();
 

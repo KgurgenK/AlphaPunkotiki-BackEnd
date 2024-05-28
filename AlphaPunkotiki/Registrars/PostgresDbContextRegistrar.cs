@@ -17,6 +17,9 @@ public static class PostgresDbContextRegistrar
             new NpgsqlDataSourceBuilder(configuration.GetConnectionString(PostgresConnectionStringName));
         npgsqlDataSourceBuilder.MapEnum<InterviewRequestStatus>();
         npgsqlDataSourceBuilder.MapEnum<QuestionType>();
+        npgsqlDataSourceBuilder.MapEnum<Gender>();
+        npgsqlDataSourceBuilder.MapEnum<Interest>();
+        npgsqlDataSourceBuilder.MapEnum<Role>();
 
         return serviceCollection
             .AddDbContext<PostgresDbContext>(options =>

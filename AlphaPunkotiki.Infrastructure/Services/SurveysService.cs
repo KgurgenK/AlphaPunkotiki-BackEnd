@@ -3,6 +3,7 @@ using AlphaPunkotiki.Domain.Entities;
 using AlphaPunkotiki.Domain.Errors;
 using AlphaPunkotiki.Infrastructure.Repositories.Interfaces;
 using AlphaPunkotiki.Infrastructure.Services.Interfaces;
+using AlphaPunkotiki.Infrastructure.Services.Models;
 using Kontur.Results;
 
 namespace AlphaPunkotiki.Infrastructure.Services;
@@ -10,7 +11,7 @@ namespace AlphaPunkotiki.Infrastructure.Services;
 public class SurveysService(ISurveysRepository surveysRepository, IQuestionsRepository questionsRepository, 
     IAnswersRepository answersRepository) : ISurveysService
 {
-    public async Task<Result<NotFoundError, (Survey, IReadOnlyList<Question>)>> GetSurveyWithQuestionsAsync(Guid id)
+    public async Task<Result<NotFoundError, SurveyWithQuestions>> GetSurveyWithQuestionsAsync(Guid id)
     {
         var survey = await surveysRepository.FindAsync(id);
 
@@ -19,7 +20,7 @@ public class SurveysService(ISurveysRepository surveysRepository, IQuestionsRepo
 
         var questions = await questionsRepository.GetManyBySurveyIdAsync(id);
 
-        return (survey, questions);
+        return new SurveyWithQuestions(survey, questions);
     }
 
     public async Task CreateSurveyAsync(SurveyDto surveyInfo, IReadOnlyList<QuestionDto> questionsInfo)
