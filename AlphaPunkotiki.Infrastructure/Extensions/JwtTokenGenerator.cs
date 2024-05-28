@@ -1,9 +1,9 @@
-﻿using AlphaPunkotiki.Domain.Entities.Base;
-using AlphaPunkotiki.Infrastructure.Extensions.Interfaces;
+﻿using AlphaPunkotiki.Infrastructure.Extensions.Interfaces;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AlphaPunkotiki.Domain.Entities;
 using AlphaPunkotiki.Infrastructure.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -19,7 +19,7 @@ public class JwtTokenGenerator(IOptions<AuthenticationOptions> authenticationOpt
 
         var claims = new Claim[]
         {
-            new(ClaimTypes.Role, user.GetType().Name),
+            new(ClaimTypes.Role, user.Role.ToString()),
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
         };
 
