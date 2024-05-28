@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlphaPunkotiki.Infrastructure.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    [Migration("20240122194246_UpdatingEntities")]
-    partial class UpdatingEntities
+    [Migration("20240528132435_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,40 @@ namespace AlphaPunkotiki.Infrastructure.Migrations
                 .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "gender", new[] { "male", "female" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "interest", new[] { "sport", "music", "education", "films", "video_games", "fashion", "psychology", "health", "food", "finance", "animals", "family", "home", "active_vacation", "art", "board_games" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "interview_request_status", new[] { "in_process", "approved", "rejected" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "question_type", new[] { "text", "checkbox", "radio_button", "drop_down_list" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "role", new[] { "respondent", "interviewer", "admin" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("AlphaPunkotiki.Domain.Entities.Account", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Login")
+                        .IsUnique();
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Accounts");
+                });
 
             modelBuilder.Entity("AlphaPunkotiki.Domain.Entities.Answer", b =>
                 {
@@ -124,6 +155,35 @@ namespace AlphaPunkotiki.Infrastructure.Migrations
                     b.ToTable("InterviewRequests");
                 });
 
+            modelBuilder.Entity("AlphaPunkotiki.Domain.Entities.Passport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Gender>("Gender")
+                        .HasColumnType("gender");
+
+                    b.Property<Interest[]>("Interests")
+                        .IsRequired()
+                        .HasColumnType("interest[]");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Passports");
+                });
+
             modelBuilder.Entity("AlphaPunkotiki.Domain.Entities.Question", b =>
                 {
                     b.Property<Guid>("Id")
@@ -202,6 +262,50 @@ namespace AlphaPunkotiki.Infrastructure.Migrations
                     b.ToTable("Surveys");
                 });
 
+            modelBuilder.Entity("AlphaPunkotiki.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("PassportId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<Role>("Role")
+                        .HasColumnType("role");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PassportId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AlphaPunkotiki.Domain.Entities.Account", b =>
+                {
+                    b.HasOne("AlphaPunkotiki.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("AlphaPunkotiki.Domain.Entities.Answer", b =>
                 {
                     b.HasOne("AlphaPunkotiki.Domain.Entities.Question", "Question")
@@ -233,6 +337,15 @@ namespace AlphaPunkotiki.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("AlphaPunkotiki.Domain.Entities.User", b =>
+                {
+                    b.HasOne("AlphaPunkotiki.Domain.Entities.Passport", "Passport")
+                        .WithMany()
+                        .HasForeignKey("PassportId");
+
+                    b.Navigation("Passport");
                 });
 #pragma warning restore 612, 618
         }

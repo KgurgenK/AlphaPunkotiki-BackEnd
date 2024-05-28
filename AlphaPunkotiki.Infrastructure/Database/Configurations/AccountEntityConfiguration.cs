@@ -1,5 +1,4 @@
 ﻿using AlphaPunkotiki.Domain.Entities;
-using AlphaPunkotiki.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

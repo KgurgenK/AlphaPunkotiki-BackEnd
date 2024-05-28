@@ -1,4 +1,4 @@
-﻿using AlphaPunkotiki.Domain.Entities.Base;
+﻿using AlphaPunkotiki.Domain.Entities;
 
 namespace AlphaPunkotiki.Infrastructure.Extensions.Interfaces;
 

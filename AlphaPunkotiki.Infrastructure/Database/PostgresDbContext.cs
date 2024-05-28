@@ -18,11 +18,7 @@ public sealed class PostgresDbContext : DbContext, IAppDbContext
 
     public DbSet<Account> Accounts { get; set; } = default!;
 
-    public DbSet<SuperUser> SuperUsers { get; set; } = default!;
-
-    public DbSet<Interviewer> Interviewers { get; set; } = default!;
-
-    public DbSet<Respondent> Respondents { get; set; } = default!;
+    public DbSet<User> Users { get; set; } = default!;
 
     public DbSet<Passport> Passports { get; set; } = default!;
 
@@ -49,6 +45,7 @@ public sealed class PostgresDbContext : DbContext, IAppDbContext
         modelBuilder.HasPostgresEnum<QuestionType>();
         modelBuilder.HasPostgresEnum<Gender>();
         modelBuilder.HasPostgresEnum<Interest>();
+        modelBuilder.HasPostgresEnum<Role>();
         modelBuilder.ApplyConfiguration(new AccountEntityConfiguration());
     }
 }
