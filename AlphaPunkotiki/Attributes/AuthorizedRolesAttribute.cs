@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace AlphaPunkotiki.WebApi;
+namespace AlphaPunkotiki.WebApi.Attributes;
 
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
 public class AuthorizedRolesAttribute(params Role[]? roles) : AuthorizeAttribute, IAuthorizationFilter
