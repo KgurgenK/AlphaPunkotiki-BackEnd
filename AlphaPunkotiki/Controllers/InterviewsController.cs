@@ -1,5 +1,6 @@
 ﻿using AlphaPunkotiki.Domain.Enums;
 using AlphaPunkotiki.Infrastructure.Services.Interfaces;
+using AlphaPunkotiki.WebApi.Attributes;
 using AlphaPunkotiki.WebApi.Controllers.Models.InterviewsController;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,21 +37,21 @@ public class InterviewsController(IInterviewsService interviewsService) : Contro
         => Ok(new GetInterviewRequestsResponse(
             await interviewsService.GetCandidateInterviewRequestsAsync(candidateId)));
 
-    [AuthorizedRoles(Role.Interviewer, Role.Admin)]
+    //[AuthorizedRoles(Role.Interviewer, Role.Admin)]
     [HttpGet("requests/by-interviewer/{interviewerId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<GetInterviewRequestsResponse>> GetInterviewerInterviewRequests(
         [FromRoute] Guid interviewerId)
         => Ok(new GetInterviewRequestsResponse(await interviewsService.GetInterviewerInterviewRequestsAsync(interviewerId)));
 
-    [AuthorizedRoles(Role.Interviewer, Role.Admin)]
+    //[AuthorizedRoles(Role.Interviewer, Role.Admin)]
     [HttpGet("{interviewId:guid}/requests")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<GetInterviewRequestsResponse>> GetInterviewRequestsOfInterview(
         [FromRoute] Guid interviewId)
         => Ok(new GetInterviewRequestsResponse(await interviewsService.GetInterviewRequestsByInterviewAsync(interviewId)));
 
-    [AuthorizedRoles(Role.Interviewer, Role.Admin)]
+    //[AuthorizedRoles(Role.Interviewer, Role.Admin)]
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult> CreateInterview([FromBody] CreateInterviewRequest request)
@@ -60,7 +61,7 @@ public class InterviewsController(IInterviewsService interviewsService) : Contro
         return Created();
     }
 
-    [AuthorizedRoles(Role.Respondent, Role.Admin)]
+    //[AuthorizedRoles(Role.Respondent, Role.Admin)]
     [HttpPost("requests/create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -73,7 +74,7 @@ public class InterviewsController(IInterviewsService interviewsService) : Contro
             : Created();
     }
 
-    [AuthorizedRoles(Role.Interviewer, Role.Admin)]
+    //[AuthorizedRoles(Role.Interviewer, Role.Admin)]
     [HttpPost("requests/{interviewRequestId:guid}/approve")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -89,7 +90,7 @@ public class InterviewsController(IInterviewsService interviewsService) : Contro
             : Ok();
     }
 
-    [AuthorizedRoles(Role.Interviewer, Role.Admin)]
+    //[AuthorizedRoles(Role.Interviewer, Role.Admin)]
     [HttpPost("requests/{interviewRequestId:guid}/reject")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
