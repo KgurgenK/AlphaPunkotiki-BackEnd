@@ -8,6 +8,7 @@ builder.Services
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services
+    .AddCors()
     .AddSwagger()
     .AddPostgresDbContext(builder.Configuration)
     .AddInterviewsServices()
@@ -16,6 +17,10 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseCors(b => b
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 app.UseHsts();
 app.UseSwagger();
 app.UseSwaggerUI();

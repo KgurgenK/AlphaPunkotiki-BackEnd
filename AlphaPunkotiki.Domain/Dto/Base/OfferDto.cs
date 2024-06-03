@@ -22,5 +22,5 @@ public abstract record OfferDto
 
     public bool IsLimitedCompletionTime { get; init; }
 
-    public DateTime? CompletionTimeLimit { get; init; }
+    public int? CompletionTimeLimit { get; init; }
 }

@@ -16,7 +16,7 @@ public class Interview : Offer
         bool isLimitedUsages,
         int? usagesLimit,
         bool isLimitedCompletionTime,
-        DateTime? completionTimeLimit)
+        int? completionTimeLimit)
         : base(
         creatorId,
         name,

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AlphaPunkotiki.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,7 @@ namespace AlphaPunkotiki.Infrastructure.Migrations
                     UsagesLimit = table.Column<int>(type: "integer", nullable: true),
                     Usages = table.Column<int>(type: "integer", nullable: false),
                     IsLimitedCompletionTime = table.Column<bool>(type: "boolean", nullable: false),
-                    CompletionTimeLimit = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    CompletionTimeLimit = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,7 +72,7 @@ namespace AlphaPunkotiki.Infrastructure.Migrations
                     UsagesLimit = table.Column<int>(type: "integer", nullable: true),
                     Usages = table.Column<int>(type: "integer", nullable: false),
                     IsLimitedCompletionTime = table.Column<bool>(type: "boolean", nullable: false),
-                    CompletionTimeLimit = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    CompletionTimeLimit = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {

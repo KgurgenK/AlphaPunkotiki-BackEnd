@@ -21,10 +21,12 @@ public static class PostgresDbContextRegistrar
         npgsqlDataSourceBuilder.MapEnum<Interest>();
         npgsqlDataSourceBuilder.MapEnum<Role>();
 
+        var dbDataSource = npgsqlDataSourceBuilder.Build();
+
         return serviceCollection
             .AddDbContext<PostgresDbContext>(options =>
                 options
-                    .UseNpgsql(npgsqlDataSourceBuilder.Build())
+                    .UseNpgsql(dbDataSource)
                     .UseLazyLoadingProxies()
             )
             .AddScoped<IAppDbContext, PostgresDbContext>();
