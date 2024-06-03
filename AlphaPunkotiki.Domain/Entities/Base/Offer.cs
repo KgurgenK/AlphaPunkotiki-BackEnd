@@ -22,7 +22,7 @@ public abstract class Offer : Entity
 
     public bool IsLimitedCompletionTime { get; private set; }
 
-    public DateTime? CompletionTimeLimit { get; private set; }
+    public int? CompletionTimeLimit { get; private set; }
 
     public bool IsAvailable => (!IsLimitedPublicationTime || DateTime.Now < PublicationTimeLimit) &&
                                  (!IsLimitedUsages || Usages < UsagesLimit);
@@ -41,7 +41,7 @@ public abstract class Offer : Entity
         bool isLimitedUsages,
         int? usagesLimit,
         bool isLimitedCompletionTime,
-        DateTime? completionTimeLimit)
+        int? completionTimeLimit)
     {
         CreatorId = creatorId;
         Name = name;

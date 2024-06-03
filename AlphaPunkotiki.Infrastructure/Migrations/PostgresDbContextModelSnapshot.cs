@@ -87,8 +87,8 @@ namespace AlphaPunkotiki.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CompletionTimeLimit")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int?>("CompletionTimeLimit")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("uuid");
@@ -219,8 +219,8 @@ namespace AlphaPunkotiki.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CompletionTimeLimit")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int?>("CompletionTimeLimit")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("uuid");
